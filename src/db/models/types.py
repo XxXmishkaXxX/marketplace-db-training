@@ -10,10 +10,15 @@ from sqlalchemy import String
 uuid_pk = Annotated[UUID, mapped_column(primary_key=True, default=uuid4)]
 str256_not_null = Annotated[str, mapped_column(String(256), nullable=False)]
 str500 = Annotated[str, 500]
-
+str256 = Annotated[str, 256]
+str128 = Annotated[str, 128]
+str64 = Annotated[str, 64]
 
 
 
 map = {
-    str500: String(500)
+    str500: String(500),
+    str256: String(256),
+    str128: String(128),
+    str64: String(64)
     }
