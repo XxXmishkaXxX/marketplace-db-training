@@ -28,8 +28,27 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     
+
+    #N:M
     roles: Mapped[List["Role"]] = relationship(
         "Role",
         secondary=users_roles,
         back_populates="users"
+    )
+
+    #1:M
+    addresses: Mapped[List["UserAddress"]] = relationship(
+        "UserAddress",
+        back_populates="users",
+        cascade="all, delete-orphan"
+    )
+    sessions: Mapped[List["UserSession"]] = relationship(
+        "UserSession",
+        back_populates="users",
+        cascade="all, delete-orphan"
+    )
+    payment_methods: Mapped[List["UserPaymentMethod"]] = relationship(
+        "UserPaymentMethod",
+        back_populates="users",
+        cascade="all, delete-orphan"
     )
