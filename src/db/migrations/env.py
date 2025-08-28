@@ -16,6 +16,9 @@ from db.config_db import settings
 from db.models.accounts.users import User
 from db.models.accounts.roles import Role
 from db.models.accounts.users_roles import users_roles
+from db.models.accounts.user_addresses import UserAddress
+from db.models.accounts.user_payment_methods import UserPaymentMethod
+from db.models.accounts.user_sessions import UserSession
 
 config = context.config
 
