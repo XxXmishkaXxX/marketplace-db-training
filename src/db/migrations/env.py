@@ -24,6 +24,11 @@ from db.models.catalogs.products_attributes import products_attributes
 from db.models.catalogs.attributes import Attribute
 from db.models.catalogs.categories import Category
 from db.models.catalogs.products_categories import products_categories
+from db.models.orders.orders import Order
+from db.models.orders.orders_items import OrderItem
+from db.models.orders.orders_status_history import OrderStatusHistory
+from db.models.orders.payments import Payment
+from db.models.orders.refunds import Refund
 
 config = context.config
 
