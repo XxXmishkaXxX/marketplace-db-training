@@ -1,0 +1,23 @@
+from uuid import UUID
+from decimal import Decimal
+from sqlalchemy import ForeignKey, Numeric, Enum
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from db.base import Base
+from models.types import uuid_pk, created_at
+from models.enums import OrderStatusEnum
+
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id: Mapped[uuid_pk]
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
+    status: Mapped[OrderStatusEnum] = mapped_column(Enum(OrderStatusEnum), default=OrderStatusEnum.pending, nullable=False)
+    total_price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
+    created_at: Mapped[created_at]
+
+    items: Mapped[list["OrderItem"]] = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
+    status_history: Mapped[list["OrderStatusHistory"]] = relationship("OrderStatusHistory", back_populates="order", cascade="all, delete-orphan")
+    payments: Mapped[list["Payment"]] = relationship("Payment", back_populates="order", cascade="all, delete-orphan")
+
