@@ -1,8 +1,8 @@
 """initiall tables
 
-Revision ID: e520428a9ca5
+Revision ID: e0b78bfd7ac3
 Revises: 
-Create Date: 2025-08-30 23:58:25.637469
+Create Date: 2025-08-31 00:08:08.824484
 
 """
 from typing import Sequence, Union
@@ -15,7 +15,7 @@ import sqlalchemy_utils.types.password
 import sqlalchemy_utils.types.phone_number
 
 # revision identifiers, used by Alembic.
-revision: str = 'e520428a9ca5'
+revision: str = 'e0b78bfd7ac3'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -79,16 +79,16 @@ def upgrade() -> None:
     sa.Column('expiration_date', sa.Date(), nullable=True),
     sa.Column('is_default', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id', 'user_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users_adresses',
     sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.Column('city', sa.String(length=256), nullable=False),
     sa.Column('street', sa.String(length=256), nullable=False),
     sa.Column('house_number', sa.String(length=256), nullable=False),
     sa.Column('apartment', sa.String(length=256), nullable=False),
     sa.Column('is_default', sa.Boolean(), nullable=False),
-    sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
