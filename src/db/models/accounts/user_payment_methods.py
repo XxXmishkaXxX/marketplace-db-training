@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Date, Boolean, ForeignKey
 from datetime import date
+from uuid import UUID
 
 from db.base import Base
 from models.types import uuid_pk, str256_not_null
@@ -9,7 +10,7 @@ class UserPaymentMethod(Base):
     __tablename__ = "user_payment_methods"
 
     id: Mapped[uuid_pk]
-    user_id: Mapped[uuid_pk] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
 
     payment_type: Mapped[str256_not_null]
     provider: Mapped[str256_not_null]

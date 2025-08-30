@@ -1,5 +1,6 @@
 import secrets
 import hashlib
+from uuid import UUID
 from datetime import datetime
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
@@ -17,9 +18,9 @@ class UserSession(Base):
     ip_address: Mapped[str64 | None]
     expires_at: Mapped[datetime]
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
 
-    user: Mapped[uuid_pk] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="users")
 
     @staticmethod
     def generate_token() -> tuple[str, str]:
