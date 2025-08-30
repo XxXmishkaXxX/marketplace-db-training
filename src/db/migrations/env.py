@@ -19,6 +19,11 @@ from db.models.accounts.users_roles import users_roles
 from db.models.accounts.user_addresses import UserAddress
 from db.models.accounts.user_payment_methods import UserPaymentMethod
 from db.models.accounts.user_sessions import UserSession
+from db.models.catalogs.products import Product, ProductImage
+from db.models.catalogs.products_attributes import products_attributes
+from db.models.catalogs.attributes import Attribute
+from db.models.catalogs.categories import Category
+from db.models.catalogs.products_categories import products_categories
 
 config = context.config
 
