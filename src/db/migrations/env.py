@@ -28,6 +28,12 @@ from db.models.orders.orders import Order
 from db.models.orders.orders_items import OrderItem
 from db.models.orders.orders_status_history import OrderStatusHistory
 from db.models.orders.refunds import Refund
+from db.models.warehouses.warehouses import Warehouse
+from db.models.warehouses.couriers import Courier
+from db.models.warehouses.delivery_zones import DeliveryZone
+from db.models.warehouses.shipments import Shipment
+from db.models.warehouses.stocks import Stock
+from db.models.warehouses.warehouses_deliveryzones import warehouses_deliveryzones
 
 config = context.config
 
