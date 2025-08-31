@@ -52,3 +52,12 @@ class User(Base):
         back_populates="users",
         cascade="all, delete-orphan"
     )
+
+    orders: Mapped[List["Order"]] = relationship(
+        "Order", 
+        back_populates="buyer", 
+        cascade="all, delete-orphan")
+    
+    products: Mapped[List["Product"]] = relationship(
+        "Product", 
+        back_populates="seller")
