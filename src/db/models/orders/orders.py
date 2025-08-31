@@ -12,12 +12,12 @@ class Order(Base):
     __tablename__ = "orders"
 
     id: Mapped[uuid_pk]
-    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
+    buyer_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     status: Mapped[OrderStatusEnum] = mapped_column(Enum(OrderStatusEnum), default=OrderStatusEnum.pending, nullable=False)
     total_price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
     created_at: Mapped[created_at]
 
-    user: Mapped["User"] = relationship("User", back_populates="orders")
+    buyer: Mapped["User"] = relationship("User", back_populates="orders")
     items: Mapped[list["OrderItem"]] = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
     status_history: Mapped[list["OrderStatusHistory"]] = relationship("OrderStatusHistory", back_populates="order", cascade="all, delete-orphan")
     payments: Mapped[list["UserPaymentMethod"]] = relationship("UserPaymentMethod", back_populates="order")
