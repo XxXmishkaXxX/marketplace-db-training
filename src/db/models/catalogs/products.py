@@ -26,6 +26,7 @@ class Product(Base):
     rating: Mapped[float] = mapped_column(default=0.0, nullable=False)
     stock: Mapped[int] = mapped_column(default=0, nullable=False)
 
+    seller: Mapped["User"] = relationship("User", back_populates="products")
     images: Mapped[List["ProductImage"]] = relationship("ProductImage",
                                                         back_populates="product",
                                                         cascade="all, delete-orphan")
@@ -39,6 +40,9 @@ class Product(Base):
         secondary=products_attributes,
         back_populates="products"
     )
+    stocks: Mapped[List["Stock"]] = relationship(
+        "Stock",
+        back_populates="product")
 
 
 
