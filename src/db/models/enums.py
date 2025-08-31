@@ -21,3 +21,15 @@ class RefundStatusEnum(enum.Enum):
     approved = "approved"
     rejected = "rejected"
     processed = "processed"
+
+
+class WarehouseType(enum.Enum):
+    MAIN = "main"
+    PICKUP = "pickup"
+    PARTNER = "partner"
+
+
+class ShipmentStatus(enum.Enum):
+    COLLECTED = "collected"
+    IN_TRANSIT = "in_transit"
+    DELIVERED = "delivered"
