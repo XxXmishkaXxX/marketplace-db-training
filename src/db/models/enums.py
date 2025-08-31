@@ -33,3 +33,20 @@ class ShipmentStatus(enum.Enum):
     COLLECTED = "collected"
     IN_TRANSIT = "in_transit"
     DELIVERED = "delivered"
+
+
+class TransactionTypeEnum(str, Enum):
+    deposit = "deposit"
+    withdrawal = "withdrawal"
+
+
+class PayoutStatusEnum(str, Enum):
+    pending = "pending"
+    completed = "completed"
+    failed = "failed"
+
+
+class InvoiceStatusEnum(str, Enum):
+    pending = "pending"
+    paid = "paid"
+    canceled = "canceled"
