@@ -61,3 +61,8 @@ class User(Base):
     products: Mapped[List["Product"]] = relationship(
         "Product", 
         back_populates="seller")
+    
+    wallet: Mapped["Wallet"] = relationship(
+        "Wallet", 
+        back_populates="user", 
+        uselist=False)
