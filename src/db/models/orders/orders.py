@@ -17,7 +17,8 @@ class Order(Base):
     total_price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
     created_at: Mapped[created_at]
 
+    user: Mapped["User"] = relationship("User", back_populates="orders")
     items: Mapped[list["OrderItem"]] = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
     status_history: Mapped[list["OrderStatusHistory"]] = relationship("OrderStatusHistory", back_populates="order", cascade="all, delete-orphan")
     payments: Mapped[list["UserPaymentMethod"]] = relationship("UserPaymentMethod", back_populates="order")
-
+    shipment: Mapped["Shipment"] = relationship(back_populates="order", uselist=False)
