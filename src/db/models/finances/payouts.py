@@ -18,4 +18,4 @@ class Payout(Base):
     status: Mapped[PayoutStatusEnum] = mapped_column(Enum(PayoutStatusEnum), default=PayoutStatusEnum.pending, nullable=False)
     created_at: Mapped[created_at]
 
-    seller: Mapped["User"] = relationship("User", back_populates="payouts")
+    seller: Mapped["User"] = relationship("User")

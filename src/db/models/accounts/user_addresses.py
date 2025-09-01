@@ -17,4 +17,4 @@ class UserAddress(Base):
 
     is_default: Mapped[bool] = mapped_column(default=False, nullable=False)
 
-    user: Mapped["User"] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="addresses")

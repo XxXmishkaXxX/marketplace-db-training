@@ -1,4 +1,5 @@
 from typing import List
+from uuid import UUID
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -15,8 +16,10 @@ class Category(Base):
     id: Mapped[uuid_pk]
     name: Mapped[str256_not_null]
 
-    parent_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=True)
-    parent: Mapped["Category"] = relationship("Category", remote_side=[id], backref="children") 
+    parent_id: Mapped[UUID] = mapped_column(ForeignKey("categories.id"), nullable=True)
+    parent: Mapped["Category"] = relationship("Category", 
+                                              remote_side=lambda: Category.id, 
+                                              backref="children") 
 
     products: Mapped[List["Product"]] = relationship("Product",
                                                      secondary=products_categories,

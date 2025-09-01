@@ -16,5 +16,5 @@ class Courier(Base):
     transport: Mapped[str256_not_null]
     rating: Mapped[float] = mapped_column(Float, nullable=True)
 
-    user: Mapped["User"] = relationship(back_populates="courier_profile")
-    assignments: Mapped[list["CourierAssignment"]] = relationship(back_populates="courier")
+    user: Mapped["User"] = relationship("User")
+    shipments: Mapped[list["Shipment"]] = relationship("Shipment", back_populates="courier")

@@ -33,7 +33,7 @@ class Product(Base):
     categories: Mapped[List["Category"]] = relationship(
         "Category",
         secondary=products_categories,
-        back_populates="product"
+        back_populates="products"
     )
     attributes: Mapped[List["Attribute"]] = relationship(
         "Attribute",

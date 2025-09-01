@@ -17,4 +17,4 @@ class Refund(Base):
     status: Mapped[RefundStatusEnum] = mapped_column(Enum(RefundStatusEnum), default=RefundStatusEnum.pending, nullable=False)
     created_at: Mapped[created_at]
 
-    payment: Mapped["UserPaymentMethod"] = relationship("PaymeUserPaymentMethod", back_populates="refunds")
+    payment: Mapped["UserPaymentMethod"] = relationship("UserPaymentMethod")

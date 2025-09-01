@@ -18,4 +18,4 @@ class Invoice(Base):
     status: Mapped[InvoiceStatusEnum] = mapped_column(Enum(InvoiceStatusEnum), default=InvoiceStatusEnum.pending, nullable=False)
     created_at: Mapped[created_at]
 
-    user: Mapped["User"] = relationship("User", back_populates="invoices")
+    user: Mapped["User"] = relationship("User")

@@ -20,7 +20,7 @@ class UserSession(Base):
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
 
-    user: Mapped["User"] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="sessions")
 
     @staticmethod
     def generate_token() -> tuple[str, str]:

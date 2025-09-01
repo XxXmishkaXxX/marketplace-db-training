@@ -39,17 +39,17 @@ class User(Base):
     #1:M
     addresses: Mapped[List["UserAddress"]] = relationship(
         "UserAddress",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
     sessions: Mapped[List["UserSession"]] = relationship(
         "UserSession",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
     payment_methods: Mapped[List["UserPaymentMethod"]] = relationship(
         "UserPaymentMethod",
-        back_populates="users",
+        back_populates="user",
         cascade="all, delete-orphan"
     )
 
