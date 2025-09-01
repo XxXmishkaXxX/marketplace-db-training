@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 
 from db.base import Base
-from models.enums import ShipmentStatus
-from models.types import uuid_pk
+from db.models.enums import ShipmentStatus
+from db.models.types import uuid_pk
 
 
 

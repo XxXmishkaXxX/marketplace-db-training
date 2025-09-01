@@ -6,7 +6,7 @@ from sqlalchemy import Numeric, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import CurrencyType
 
-from models.types import uuid_pk
+from db.models.types import uuid_pk
 from db.base import Base
 
 

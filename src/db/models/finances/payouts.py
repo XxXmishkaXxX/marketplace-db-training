@@ -4,8 +4,8 @@ from uuid import UUID
 from sqlalchemy import Numeric, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.types import uuid_pk, created_at
-from models.enums import PayoutStatusEnum
+from db.models.types import uuid_pk, created_at
+from db.models.enums import PayoutStatusEnum
 from db.base import Base
 
 

@@ -4,9 +4,9 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
-from models.types import uuid_pk, str256_not_null
+from db.models.types import uuid_pk, str256_not_null
 from db.base import Base
-from models.catalogs.products_categories import products_categories
+from db.models.catalogs.products_categories import products_categories
 
 
 

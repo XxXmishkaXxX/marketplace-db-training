@@ -2,9 +2,9 @@ from typing import List
 from sqlalchemy.orm import Mapped, relationship
 
 
-from models.types import uuid_pk, str32_not_null
+from db.models.types import uuid_pk, str32_not_null
 from db.base import Base
-from models.catalogs.products_attributes import products_attributes 
+from db.models.catalogs.products_attributes import products_attributes 
 
 
 

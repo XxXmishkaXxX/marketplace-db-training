@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 
 from db.base import Base
-from models.types import uuid_pk, str256_not_null
+from db.models.types import uuid_pk, str256_not_null
 
 
 class Courier(Base):

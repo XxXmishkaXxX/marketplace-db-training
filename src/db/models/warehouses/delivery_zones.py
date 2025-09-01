@@ -2,8 +2,8 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy import Float
 
 from db.base import Base
-from models.types import uuid_pk, str256_not_null
-from models.warehouses.warehouses_deliveryzones import warehouses_deliveryzones
+from db.models.types import uuid_pk, str256_not_null
+from db.models.warehouses.warehouses_deliveryzones import warehouses_deliveryzones
 
 
 class DeliveryZone(Base):

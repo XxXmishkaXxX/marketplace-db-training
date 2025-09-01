@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
 
 from db.base import Base
-from models.types import uuid_pk, str128, str64
+from db.models.types import uuid_pk, str128, str64
 
 class UserSession(Base):
     __tablename__ = "users_sessions"

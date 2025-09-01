@@ -1,13 +1,13 @@
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from db.base import Base
-from .users_roles import users_roles
-
-#types
 from typing import List
 from datetime import datetime
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Boolean, Date
 from sqlalchemy_utils import PasswordType, EmailType, PhoneNumberType
-from models.types import uuid_pk, str256_not_null
+
+
+from db.base import Base
+from db.models.accounts.users_roles import users_roles
+from db.models.types import uuid_pk, str256_not_null
 
 
 class User(Base):
