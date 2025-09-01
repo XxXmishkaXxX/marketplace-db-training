@@ -4,8 +4,8 @@ from sqlalchemy import ForeignKey, Numeric, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
-from models.types import uuid_pk, created_at
-from models.enums import RefundStatusEnum
+from db.models.types import uuid_pk, created_at
+from db.models.enums import RefundStatusEnum
 
 
 class Refund(Base):
@@ -17,4 +17,4 @@ class Refund(Base):
     status: Mapped[RefundStatusEnum] = mapped_column(Enum(RefundStatusEnum), default=RefundStatusEnum.pending, nullable=False)
     created_at: Mapped[created_at]
 
-    payment: Mapped["UserPaymentMethod"] = relationship("PaymeUserPaymentMethod", back_populates="refunds")
+    payment: Mapped["UserPaymentMethod"] = relationship("UserPaymentMethod")

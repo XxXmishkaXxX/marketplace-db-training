@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
 
 from db.base import Base
-from models.types import uuid_pk, str128, str64
+from db.models.types import uuid_pk, str128, str64
 
 class UserSession(Base):
     __tablename__ = "users_sessions"
@@ -20,7 +20,7 @@ class UserSession(Base):
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
 
-    user: Mapped["User"] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="sessions")
 
     @staticmethod
     def generate_token() -> tuple[str, str]:

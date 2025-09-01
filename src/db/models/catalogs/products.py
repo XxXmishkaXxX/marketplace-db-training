@@ -7,10 +7,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import CurrencyType
 
 
-from models.types import uuid_pk, str256_not_null, str500_not_null
+from db.models.types import uuid_pk, str256_not_null, str500_not_null
 from db.base import Base
-from models.catalogs.products_categories import products_categories
-from models.catalogs.products_attributes import products_attributes
+from db.models.catalogs.products_categories import products_categories
+from db.models.catalogs.products_attributes import products_attributes
 
 
 class Product(Base):
@@ -33,7 +33,7 @@ class Product(Base):
     categories: Mapped[List["Category"]] = relationship(
         "Category",
         secondary=products_categories,
-        back_populates="product"
+        back_populates="products"
     )
     attributes: Mapped[List["Attribute"]] = relationship(
         "Attribute",

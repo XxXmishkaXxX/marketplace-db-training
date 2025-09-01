@@ -4,8 +4,8 @@ from uuid import UUID
 from sqlalchemy import Numeric, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.types import uuid_pk, created_at
-from models.enums import InvoiceStatusEnum
+from db.models.types import uuid_pk, created_at
+from db.models.enums import InvoiceStatusEnum
 from db.base import Base
 
 
@@ -18,4 +18,4 @@ class Invoice(Base):
     status: Mapped[InvoiceStatusEnum] = mapped_column(Enum(InvoiceStatusEnum), default=InvoiceStatusEnum.pending, nullable=False)
     created_at: Mapped[created_at]
 
-    user: Mapped["User"] = relationship("User", back_populates="invoices")
+    user: Mapped["User"] = relationship("User")

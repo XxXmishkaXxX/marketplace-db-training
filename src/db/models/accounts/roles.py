@@ -1,8 +1,8 @@
 from typing import List
 from db.base import Base
 from sqlalchemy.orm import Mapped, relationship
-from models.types import uuid_pk, str256_not_null, str500
-from .users_roles import users_roles
+from db.models.types import uuid_pk, str256_not_null, str500
+from db.models.accounts.users_roles import users_roles
 
 class Role(Base):
     __tablename__ = "roles"

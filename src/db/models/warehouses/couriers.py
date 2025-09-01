@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 
 from db.base import Base
-from models.types import uuid_pk, str256_not_null
+from db.models.types import uuid_pk, str256_not_null
 
 
 class Courier(Base):
@@ -16,5 +16,5 @@ class Courier(Base):
     transport: Mapped[str256_not_null]
     rating: Mapped[float] = mapped_column(Float, nullable=True)
 
-    user: Mapped["User"] = relationship(back_populates="courier_profile")
-    assignments: Mapped[list["CourierAssignment"]] = relationship(back_populates="courier")
+    user: Mapped["User"] = relationship("User")
+    shipments: Mapped[list["Shipment"]] = relationship("Shipment", back_populates="courier")

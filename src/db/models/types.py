@@ -4,6 +4,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import mapped_column
 from sqlalchemy import String, Date
+from db.base import Base
 
 
 
@@ -21,8 +22,7 @@ str128 = Annotated[str, 128]
 str64 = Annotated[str, 64]
 
 
-
-map = {
+Base.type_annotation_map = {
     str500: String(500),
     str256: String(256),
     str128: String(128),

@@ -3,7 +3,7 @@ from sqlalchemy import ForeignKey
 from uuid import UUID
 
 from db.base import Base
-from models.types import uuid_pk, str256_not_null
+from db.models.types import uuid_pk, str256_not_null
 
 class UserAddress(Base):
     __tablename__ = "users_adresses"
@@ -17,4 +17,4 @@ class UserAddress(Base):
 
     is_default: Mapped[bool] = mapped_column(default=False, nullable=False)
 
-    user: Mapped["User"] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="addresses")

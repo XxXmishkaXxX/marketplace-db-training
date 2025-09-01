@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 
 from db.base import Base
-from models.types import uuid_pk
+from db.models.types import uuid_pk
 
 
 

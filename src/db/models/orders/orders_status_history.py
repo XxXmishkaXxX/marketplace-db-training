@@ -4,8 +4,8 @@ from sqlalchemy import ForeignKey, Enum, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
-from models.types import uuid_pk
-from models.enums import OrderStatusEnum
+from db.models.types import uuid_pk
+from db.models.enums import OrderStatusEnum
 
 
 class OrderStatusHistory(Base):
