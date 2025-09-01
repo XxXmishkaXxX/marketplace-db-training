@@ -1,8 +1,8 @@
 """init tables
 
-Revision ID: b7062c2cd249
+Revision ID: 078f92bc254c
 Revises: 
-Create Date: 2025-09-01 01:18:38.475910
+Create Date: 2025-09-01 18:46:00.921319
 
 """
 from typing import Sequence, Union
@@ -15,7 +15,7 @@ import sqlalchemy_utils.types.password
 import sqlalchemy_utils.types.phone_number
 
 # revision identifiers, used by Alembic.
-revision: str = 'b7062c2cd249'
+revision: str = '078f92bc254c'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -48,7 +48,7 @@ def upgrade() -> None:
     op.create_table('roles',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('name', sa.String(length=256), nullable=False),
-    sa.Column('description', sa.String(length=500), nullable=False),
+    sa.Column('description', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -82,6 +82,15 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('invoices',
+    sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('user_id', sa.Uuid(), nullable=False),
+    sa.Column('amount', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('status', sa.Enum('pending', 'paid', 'canceled', name='invoicestatusenum'), nullable=False),
+    sa.Column('created_at', sa.Date(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('orders',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('buyer_id', sa.Uuid(), nullable=False),
@@ -89,6 +98,15 @@ def upgrade() -> None:
     sa.Column('total_price', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('created_at', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['buyer_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('payouts',
+    sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('seller_id', sa.Uuid(), nullable=False),
+    sa.Column('amount', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('status', sa.Enum('pending', 'completed', 'failed', name='payoutstatusenum'), nullable=False),
+    sa.Column('created_at', sa.Date(), nullable=False),
+    sa.ForeignKeyConstraint(['seller_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('products',
@@ -135,13 +153,22 @@ def upgrade() -> None:
     op.create_table('users_sessions',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('token_hash', sa.String(), nullable=False),
-    sa.Column('device_info', sa.String(length=128), nullable=True),
-    sa.Column('ip_address', sa.String(length=64), nullable=True),
+    sa.Column('device_info', sa.String(), nullable=True),
+    sa.Column('ip_address', sa.String(), nullable=True),
     sa.Column('expires_at', sa.DateTime(), nullable=False),
     sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('token_hash')
+    )
+    op.create_table('wallets',
+    sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('user_id', sa.Uuid(), nullable=False),
+    sa.Column('balance', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('currency', sqlalchemy_utils.types.currency.CurrencyType(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('user_id')
     )
     op.create_table('warehouses_deliveryzones',
     sa.Column('warehouse_id', sa.Uuid(), nullable=False),
@@ -166,6 +193,16 @@ def upgrade() -> None:
     sa.Column('status', sa.Enum('pending', 'paid', 'shipped', 'completed', 'cancelled', 'refunded', name='orderstatusenum'), nullable=False),
     sa.Column('changed_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('orders_payments',
+    sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('order_id', sa.Uuid(), nullable=False),
+    sa.Column('payment_method_id', sa.Uuid(), nullable=False),
+    sa.Column('amount', sa.Float(), nullable=False),
+    sa.Column('paid_at', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
+    sa.ForeignKeyConstraint(['payment_method_id'], ['user_payment_methods.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('product_images',
@@ -202,8 +239,10 @@ def upgrade() -> None:
     op.create_table('shipments',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('order_id', sa.Uuid(), nullable=False),
+    sa.Column('courier_id', sa.Uuid(), nullable=True),
     sa.Column('warehouse_id', sa.Uuid(), nullable=False),
     sa.Column('status', sa.Enum('COLLECTED', 'IN_TRANSIT', 'DELIVERED', name='shipmentstatus'), nullable=False),
+    sa.ForeignKeyConstraint(['courier_id'], ['couriers.id'], ),
     sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
     sa.ForeignKeyConstraint(['warehouse_id'], ['warehouses.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -216,27 +255,41 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['warehouse_id'], ['warehouses.id'], ),
     sa.PrimaryKeyConstraint('warehouse_id', 'product_id')
     )
+    op.create_table('transactions',
+    sa.Column('id', sa.Uuid(), nullable=False),
+    sa.Column('wallet_id', sa.Uuid(), nullable=False),
+    sa.Column('type', sa.Enum('deposit', 'withdrawal', name='transactiontypeenum'), nullable=False),
+    sa.Column('amount', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('created_at', sa.Date(), nullable=False),
+    sa.ForeignKeyConstraint(['wallet_id'], ['wallets.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     # ### end Alembic commands ###
 
 
 def downgrade() -> None:
     """Downgrade schema."""
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('transactions')
     op.drop_table('stock')
     op.drop_table('shipments')
     op.drop_table('refunds')
     op.drop_table('products_categories')
     op.drop_table('products_attributes')
     op.drop_table('product_images')
+    op.drop_table('orders_payments')
     op.drop_table('order_status_history')
     op.drop_table('order_items')
     op.drop_table('warehouses_deliveryzones')
+    op.drop_table('wallets')
     op.drop_table('users_sessions')
     op.drop_table('users_roles')
     op.drop_table('users_adresses')
     op.drop_table('user_payment_methods')
     op.drop_table('products')
+    op.drop_table('payouts')
     op.drop_table('orders')
+    op.drop_table('invoices')
     op.drop_table('couriers')
     op.drop_table('warehouses')
     op.drop_index(op.f('ix_users_phone_number'), table_name='users')
