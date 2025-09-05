@@ -1,8 +1,8 @@
 """init tables
 
-Revision ID: 078f92bc254c
+Revision ID: 338d23b96abe
 Revises: 
-Create Date: 2025-09-01 18:46:00.921319
+Create Date: 2025-09-05 23:23:06.419321
 
 """
 from typing import Sequence, Union
@@ -15,7 +15,7 @@ import sqlalchemy_utils.types.password
 import sqlalchemy_utils.types.phone_number
 
 # revision identifiers, used by Alembic.
-revision: str = '078f92bc254c'
+revision: str = '338d23b96abe'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -127,7 +127,7 @@ def upgrade() -> None:
     sa.Column('payment_type', sa.String(length=256), nullable=False),
     sa.Column('provider', sa.String(length=256), nullable=False),
     sa.Column('account_number_masked', sa.String(length=256), nullable=False),
-    sa.Column('expiration_date', sa.Date(), nullable=True),
+    sa.Column('expiration_date', sa.String(length=5), nullable=True),
     sa.Column('is_default', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

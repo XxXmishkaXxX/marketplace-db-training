@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Date, Boolean, ForeignKey
+from sqlalchemy import Date, Boolean, ForeignKey, String
 from datetime import date
 from uuid import UUID
 
@@ -15,7 +15,7 @@ class UserPaymentMethod(Base):
     payment_type: Mapped[str256_not_null]
     provider: Mapped[str256_not_null]
     account_number_masked: Mapped[str256_not_null]
-    expiration_date: Mapped[date] = mapped_column(Date, nullable=True)
+    expiration_date: Mapped[str] = mapped_column(String(5), nullable=True)
     is_default: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="payment_methods")

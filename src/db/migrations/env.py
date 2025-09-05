@@ -40,7 +40,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-database_url = settings.DATABASE_URL
+database_url = settings.DATABASE_URL_ASYNC
 if database_url:
     config.set_section_option('alembic', 'sqlalchemy.url', database_url)
 else:
